@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary Countdown</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav id="navbar">
+        <h1 id="anniversaryTitle">Happy 3-Month Anniversary!</h1>
+    </nav>
+
+    <div id="mobile-message">
+        <p>Switch to your phone Wiki</p>
+    </div>
+
+    <div id="countdown-container">
+        <p id="additionalText">
+            I love you so much Wiktoria
+        </p>
+        <p id="monthsCounter"></p>
+        <p id="weeksCounter"></p>
+        <p id="daysCounter"></p>
+        <p id="hoursCounter"></p>
+        <p id="minutesCounter"></p>
+        <p id="secondsCounter"></p>
+    </div>
+
+    <img id="kuromi-image" src="kuromi2.png" alt="Kuromi" style="max-width: 35%; height: auto; margin-bottom:160px;">
+    <img id="hello-image" src="hello.png" alt="Hello"
+        style="max-width: 25%; height: auto; margin-bottom:160px; margin-right: 30px;">
+
+    <script>
+        function calculateTimeDifference() {
+            var offset = -1;
+            var startDate = new Date('10/8/2023');
+            var currentDate = new Date();
+
+            currentDate.setHours(currentDate.getHours() + offset);
+
+            var timeDiff = currentDate - startDate;
+
+            var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            var weeks = Math.floor(days / 7);
+            var months = Math.floor(days / 30);
+            var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            return { days, weeks, months, hours, minutes, seconds };
+        }
+
+        function updateCounter() {
+            var time = calculateTimeDifference();
+            document.getElementById('daysCounter').textContent = 'Days: ' + time.days;
+            document.getElementById('weeksCounter').textContent = 'Weeks: ' + time.weeks;
+            document.getElementById('hoursCounter').textContent = 'Hours: ' + time.hours;
+            document.getElementById('minutesCounter').textContent = 'Minutes: ' + time.minutes;
+            document.getElementById('secondsCounter').textContent = 'Seconds: ' + time.seconds;
+            document.getElementById('monthsCounter').textContent = 'Months: ' + time.months;
+            document.getElementById('anniversaryTitle').textContent = 'Happy ' + time.months + '-Month Anniversary!';
+        }
+
+        updateCounter();
+
+        setInterval(updateCounter, 1000);
+    </script>
+</body>
+
+</html>

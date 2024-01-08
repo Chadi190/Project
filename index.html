@@ -55,12 +55,12 @@
 
         function updateCounter() {
             var time = calculateTimeDifference();
-            document.getElementById('daysCounter').textContent = 'Days: ' + time.days;
-            document.getElementById('weeksCounter').textContent = 'Weeks: ' + time.weeks;
+            document.getElementById('daysCounter').textContent = 'Days since: ' + time.days;
+            document.getElementById('weeksCounter').textContent = 'Weeks since: ' + time.weeks;
             document.getElementById('hoursCounter').textContent = 'Hours: ' + time.hours;
             document.getElementById('minutesCounter').textContent = 'Minutes: ' + time.minutes;
             document.getElementById('secondsCounter').textContent = 'Seconds: ' + time.seconds;
-            document.getElementById('monthsCounter').textContent = 'Months: ' + time.months;
+            document.getElementById('monthsCounter').textContent = 'Months since: ' + time.months;
             document.getElementById('anniversaryTitle').textContent = 'Happy ' + time.months + '-Month Anniversary!';
         }
 

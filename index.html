@@ -5,34 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anniversary Countdown</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-image: url('hello.webp');
+        }
+
+        .navbar-brand {
+            font-size: 25px;
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+            border: solid 4px #800080;
+            background-color: #ff69b4;
+            border-radius: 20px;
+
+        }
+
+        .cardj {
+            border-radius: 20px;
+            border: solid 4px #ff69b4;
+        }
+    </style>
 </head>
 
 <body>
-    <nav id="navbar">
-        <h1 id="anniversaryTitle">Happy 3-Month Anniversary!</h1>
+    <nav class="navbar navbar-dark mt-3  bg-pink">
+        <div class="container d-flex justify-content-center align-items-center">
+            <span class="navbar-brand mb-1 px-4 "></span>
+        </div>
     </nav>
 
-    <div id="mobile-message">
-        <p>Switch to your phone Wiki</p>
+    <div class="container text-center text-white mt-2 mt-md-5 p-5 ">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6 mb-4 ">
+                <div class="cardj card  p-2" id="countdown-card" style="background-color: #ff9cd0;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold mt-4">Time Since</h5>
+                        <h1 class="card-text fw-bold mt-4">I love you so much Wiktoria <i class="bi bi-heart-fill"></i>
+                        </h1>
+                        <h3 class="card-text fw-bold mt-4" id="monthsCounter"></h3>
+                        <h3 class="card-text fw-bold mt-4 " id="weeksCounter"></h3>
+                        <h3 class="card-text fw-bold mt-4" id="daysCounter"></h3>
+                        <h3 class="card-text fw-bold mt-4" id="hoursCounter"></h3>
+                        <h3 class="card-text fw-bold mt-4" id="minutesCounter"></h3>
+                        <h3 class="card-text fw-bold mt-4 pb-2" id="secondsCounter"></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mt-3">
+                <div class="row">
+                    <div class="col-md-6 col-6">
+                        <img id="kuromi-image" src="kuromi2.png" class="img-fluid col-10 ms-3 " alt="Kuromi">
+
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <img id="hello-image" src="hello.png" class="img-fluid col-8 mt-4 " alt="Hello">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="countdown-container">
-        <p id="additionalText">
-            I love you so much Wiktoria
-        </p>
-        <p id="monthsCounter"></p>
-        <p id="weeksCounter"></p>
-        <p id="daysCounter"></p>
-        <p id="hoursCounter"></p>
-        <p id="minutesCounter"></p>
-        <p id="secondsCounter"></p>
-    </div>
-
-    <img id="kuromi-image" src="kuromi2.png" alt="Kuromi" style="max-width: 35%; height: auto; margin-bottom:160px;">
-    <img id="hello-image" src="hello.png" alt="Hello"
-        style="max-width: 25%; height: auto; margin-bottom:160px; margin-right: 30px;">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function calculateTimeDifference() {
             var offset = -1;
@@ -41,32 +78,51 @@
 
             currentDate.setHours(currentDate.getHours() + offset);
 
-            var timeDiff = currentDate - startDate;
+            var yearsDiff = currentDate.getFullYear() - startDate.getFullYear();
+            var monthsDiff = currentDate.getMonth() - startDate.getMonth();
+            var daysDiff = currentDate.getDate() - startDate.getDate();
 
-            var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            var weeks = Math.floor(days / 7);
-            var months = Math.floor(days / 30);
-            var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            if (daysDiff < 0) {
+                monthsDiff--;
+                var prevMonthDays = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 0).getDate();
+                daysDiff = prevMonthDays + daysDiff;
+            }
 
-            return { days, weeks, months, hours, minutes, seconds };
+            var totalMonths = yearsDiff * 12 + monthsDiff;
+
+            var totalDays = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+            var weeks = Math.floor(totalDays / 7);
+
+
+            var totalHours = Math.floor((currentDate - startDate) / (1000 * 60 * 60));
+            var minutes = Math.floor((currentDate - startDate) / (1000 * 60));
+            var seconds = Math.floor((currentDate - startDate) / 1000);
+
+            return { totalMonths, weeks, totalDays, totalHours, minutes, seconds };
         }
+
 
         function updateCounter() {
             var time = calculateTimeDifference();
-            document.getElementById('daysCounter').textContent = 'Days since: ' + time.days;
-            document.getElementById('weeksCounter').textContent = 'Weeks since: ' + time.weeks;
-            document.getElementById('hoursCounter').textContent = 'Hours: ' + time.hours;
-            document.getElementById('minutesCounter').textContent = 'Minutes: ' + time.minutes;
-            document.getElementById('secondsCounter').textContent = 'Seconds: ' + time.seconds;
-            document.getElementById('monthsCounter').textContent = 'Months since: ' + time.months;
-            document.getElementById('anniversaryTitle').textContent = 'Happy ' + time.months + '-Month Anniversary!';
+            document.getElementById('monthsCounter').textContent = 'Months: ' + time.totalMonths;
+            document.getElementById('weeksCounter').textContent = 'Weeks: ' + time.weeks;
+            document.getElementById('daysCounter').textContent = 'Days: ' + time.totalDays;
+
+            var formattedHours = time.totalHours.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            document.getElementById('hoursCounter').textContent = 'Hours: ' + formattedHours;
+
+            var formattedMinutes = time.minutes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            document.getElementById('minutesCounter').textContent = 'Minutes: ' + formattedMinutes;
+
+            var formattedSeconds = time.seconds.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            document.getElementById('secondsCounter').textContent = 'Seconds: ' + formattedSeconds;
+
+            document.querySelector('.navbar-brand').textContent = 'Happy ' + time.totalMonths + '-Month Anniversary!';
         }
 
         updateCounter();
-
         setInterval(updateCounter, 1000);
+
     </script>
 </body>
 
